@@ -1,0 +1,75 @@
+# This YAML file describes your package. Stack will automatically generate a
+# Cabal file when you run `stack build`. See the hpack website for help with
+# this file: <https://github.com/sol/hpack>.
+name: experimentation
+version: '0.0.0'
+github: "githubuser/experimentation"
+license: MIT
+author: "Leigh Perry"
+maintainer: "Leigh Perry"
+# synopsis: A new template package.
+# description: experimentation is a new template package.
+# category: Other
+
+extra-source-files:
+- package.yaml
+- README.md
+- stack.yaml
+
+ghc-options: -Wall
+
+library:
+  dependencies:
+  - base
+  - cassava
+  - text
+  - vector
+  - bytestring
+  - parsec
+  - transformers
+  - MissingH
+  - containers
+  - regex-posix
+  - mtl
+  source-dirs: src
+
+executables:
+  experimentation:
+    source-dirs: app
+    main: Main.hs
+    dependencies:
+    - base
+    - experimentation
+    - optparse-applicative
+    - transformers
+    - mtl
+    - bytestring
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
+
+benchmarks:
+  experimentation-benchmarks:
+    source-dirs: benchmark
+    main: Main.hs
+    dependencies:
+    - base
+    - experimentation
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
+
+tests:
+  experimentation-test-suite:
+    source-dirs: test
+    main: Main.hs
+    dependencies:
+    - base
+    - experimentation
+    - hedgehog
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
