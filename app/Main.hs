@@ -1,4 +1,4 @@
-import           Experimentation (run)
+import           Cps (run)
 
 main :: IO ()
 main = run
