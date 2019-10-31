@@ -1,4 +1,4 @@
-import           Cps (run)
+import           SortMonoid (run)
 
 main :: IO ()
 main = run

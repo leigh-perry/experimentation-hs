@@ -49,7 +49,7 @@ eg5composition = times3 (greaterThan10 id)
     greaterThan10 c i = c (10 < i)
 
 newtype Cont r a =
-  Cont ((a -> r) -> r)
+  Cont ((a -> r) -> r)  -- continuation function (k) -> r
 
 runCont :: Cont r a -> (a -> r) -> r
 runCont (Cont ff) = ff
