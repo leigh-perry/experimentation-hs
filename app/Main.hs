@@ -1,5 +1,4 @@
-import           Cont        (run)
-import           SortMonoid (run)
+import qualified SortMonoid (run)
 
 main :: IO ()
-main = run
+main = SortMonoid.run
