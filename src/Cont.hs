@@ -60,7 +60,6 @@ evalCont (Cont ff) = ff id
 pureCont :: a -> Cont r a
 pureCont a = Cont (\c -> c a)
 
--- TODO follow types
 bindCont :: Cont r a -> (a -> Cont r b) -> Cont r b
 bindCont (Cont ma) mc_ = Cont (\k -> ma (\a -> mc a (\b -> k b)))
   where
