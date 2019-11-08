@@ -1,7 +1,13 @@
 module Folds where
 
+import           Data.List.NonEmpty (NonEmpty)
+import           Data.Void          (Void)
+import           GHC.IO             (throwIO)
+
 run :: IO ()
-run = undefined
+run = do
+  _ <- throwIO $ userError "throw?"
+  putStrLn "And now..."
 --
 -- foldl :: (b -> a -> b) -> b -> t a -> b
 -- foldl f zb [x, y, z] = ((zb `f` x) `f` y) `f` z
