@@ -17,7 +17,13 @@ newtype Yoneda f b =
 
 instance Functor (Yoneda f) where
   fmap :: (a -> b) -> Yoneda f a -> Yoneda f b
-  fmap a2b (Yoneda b2b12fb1) = Yoneda (\b2b1 -> b2b12fb1 (b2b1 . a2b))
+  fmap ab (Yoneda bb1fb1) = Yoneda (\bb1 -> bb1fb1 (bb1 . ab))
+
+toYoneda :: Functor f => f a -> Yoneda f a
+toYoneda fa = Yoneda (<$> fa)
+
+fromYoneda :: Yoneda f a -> f a
+fromYoneda (Yoneda ab1fb1) = ab1fb1 id
 
 --
 data Coyoneda f a =
@@ -25,4 +31,4 @@ data Coyoneda f a =
 
 instance Functor (Coyoneda f) where
   fmap :: (a -> b) -> Coyoneda f a -> Coyoneda f b
-  fmap a2b (Coyoneda x2a fx) = Coyoneda (a2b . x2a) fx
+  fmap ab (Coyoneda xa fx) = Coyoneda (ab . xa) fx
