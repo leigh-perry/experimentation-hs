@@ -32,3 +32,27 @@ data Coyoneda f a =
 instance Functor (Coyoneda f) where
   fmap :: (a -> b) -> Coyoneda f a -> Coyoneda f b
   fmap ab (Coyoneda xa fx) = Coyoneda (ab . xa) fx
+
+--
+toCoyoneda :: f a -> Coyoneda f a
+toCoyoneda = Coyoneda id
+
+fromCoyoneda :: Functor f => Coyoneda f a -> f a
+fromCoyoneda (Coyoneda xa fx) = xa <$> fx
+
+--
+data Coroutine s m r =
+  Coroutine
+    { resume :: m (St s m r)
+    }
+
+data St s m r
+  = Run (s (Coroutine s m r))
+  | Done r
+
+instance (Functor s, Functor m) => Functor (Coroutine s m) where
+  fmap f ca = Coroutine (fmap (fmap f) (resume ca))
+
+instance (Functor s, Functor m) => Functor (St s m) where
+  fmap f (Run sca) = undefined
+  fmap f (Done a) = Done (f a)
