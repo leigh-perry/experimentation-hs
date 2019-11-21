@@ -20,7 +20,7 @@ instance Functor (Yoneda f) where
   fmap ab (Yoneda bb1fb1) = Yoneda (\bb1 -> bb1fb1 (bb1 . ab))
 
 toYoneda :: Functor f => f a -> Yoneda f a
-toYoneda fa = Yoneda (<$> fa)
+toYoneda fa = Yoneda (`fmap` fa)
 
 fromYoneda :: Yoneda f a -> f a
 fromYoneda (Yoneda ab1fb1) = ab1fb1 id
@@ -38,7 +38,7 @@ toCoyoneda :: f a -> Coyoneda f a
 toCoyoneda = Coyoneda id
 
 fromCoyoneda :: Functor f => Coyoneda f a -> f a
-fromCoyoneda (Coyoneda xa fx) = xa <$> fx
+fromCoyoneda (Coyoneda xa fx) = fmap xa fx
 
 --
 data Coroutine s m r =
@@ -50,9 +50,9 @@ data St s m r
   = Run (s (Coroutine s m r))
   | Done r
 
-instance (Functor s, Functor m) => Functor (Coroutine s m) where
-  fmap f ca = Coroutine (fmap (fmap f) (resume ca))
-
 instance (Functor s, Functor m) => Functor (St s m) where
-  fmap f (Run sca) = undefined
-  fmap f (Done a) = Done (f a)
+  fmap f (Run sCsmr) = Run $ fmap (fmap f) sCsmr
+  fmap f (Done a)    = Done (f a)
+
+instance (Functor s, Functor m) => Functor (Coroutine s m) where
+  fmap f cr = Coroutine (fmap (fmap f) (resume cr))
