@@ -8,7 +8,7 @@ module Yoneda
   ) where
 
 run :: IO ()
-run = undefined
+run = undefined -- TODO
 
 newtype Yoneda f b =
   Yoneda
@@ -51,8 +51,36 @@ data St s m r
   | Done r
 
 instance (Functor s, Functor m) => Functor (St s m) where
-  fmap f (Run sCsmr) = Run $ fmap (fmap f) sCsmr
+  fmap f (Run scsmr) = Run $ fmap (fmap f) scsmr
   fmap f (Done a)    = Done (f a)
 
 instance (Functor s, Functor m) => Functor (Coroutine s m) where
   fmap f cr = Coroutine (fmap (fmap f) (resume cr))
+
+--
+newtype Endo a =
+  Endo
+    { appEndo :: a -> a
+    }
+
+-- YEndo ~ Yoneda Endo
+newtype YEndo a =
+  YEndo
+    { yEndo :: forall b1. (a -> b1) -> (b1 -> b1)
+    }
+
+instance Functor YEndo where
+  fmap :: (a -> b) -> YEndo a -> YEndo b
+  fmap f y = YEndo (\b2b1 -> yEndo y (b2b1 . f))
+
+instance Applicative YEndo where
+  pure :: a -> YEndo a
+  pure a = YEndo (const id) -- TODO what about `a`?
+  (<*>) :: YEndo (a -> b) -> YEndo a -> YEndo b
+  (<*>) (YEndo a2b2e2e2e) (YEndo a2e2e2e) = undefined -- a2e2e2e  -- TODO
+
+instance Monad YEndo where
+  return :: a -> YEndo a
+  return a = undefined  -- TODO
+  (>>=) :: forall a b. YEndo a -> (a -> YEndo b) -> YEndo b
+  (>>=) ma a2mb = undefined -- TODO
