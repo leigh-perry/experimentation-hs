@@ -1,5 +1,6 @@
 import qualified SortMonoid (run)
 import qualified Folds (run)
+import qualified ContT (run)
 
 main :: IO ()
-main = Folds.run
+main = ContT.run
