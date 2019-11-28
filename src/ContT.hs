@@ -6,6 +6,8 @@ module ContT
 
 import           Control.Monad.Identity (Identity, runIdentity)
 
+// https://maxhallinan.com/posts/2019/10/22/how-does-the-continuation-monad-work/
+
 run :: IO ()
 run = do
   print $ calcK id
