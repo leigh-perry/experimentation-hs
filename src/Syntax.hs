@@ -16,3 +16,24 @@ nestedMaybe i = Just (Just i)
 --nestedMap = fmap . fmap
 nestedMap :: (Int -> String) -> Maybe (Maybe Int) -> Maybe (Maybe String)
 nestedMap = fmap . fmap
+
+----
+data Product
+
+data Html =
+  Html
+  deriving (Eq)
+
+getProduct :: tring -> Maybe Product
+getProduct = undefined
+
+renderPage :: Product -> Html
+renderPage = undefined
+
+compose1 :: Bool
+compose1 = bracketStyle == composeStyle
+  where
+    bracketStyle = fmap renderPage (getProduct "asdf")
+    composeStyle = (fmap renderPage . getProduct) "asdf"
+
+----
