@@ -66,7 +66,7 @@ updateRover instruction plateau (Rover c d) = Rover c' d'
   where
     (c', d') =
       case instruction of
-        'L' -> (c, rotate (-1) d)
+        'L' -> (c, rotate 3 d)
         'R' -> (c, rotate 1 d)
         'M' -> (moveOne d plateau c, d)
         _   -> error $ "Illegal instruction " <> show instruction
