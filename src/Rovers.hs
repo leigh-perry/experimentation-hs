@@ -97,7 +97,7 @@ moveOne d plateau c = bool c' c (isOccupied plateau c') -- bail on occupied cell
 isOccupied :: Plateau -> Coord -> Bool
 isOccupied p c = c `elem` (rCoord <$> pFinished p)
 
----- crufy code for reading the config
+---- crufty code for reading the config
 decodeConfig :: String -> ([(Rover, String)], Plateau)
 decodeConfig text = (roverInstructions, Plateau topRight [])
   where
